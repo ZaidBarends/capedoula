@@ -57,9 +57,26 @@
   .nav-toggle.open span:nth-child(2) { opacity: 0; }
   .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+  /* TOP PROMO BANNER */
+  .top-promo {
+    margin-top: 70px;
+    padding: 12px 48px;
+    background: linear-gradient(90deg, #2D4A3E 0%, #3D6455 60%, #4A7A68 100%);
+    border-bottom: 1px solid rgba(255,255,255,0.14);
+  }
+  .top-promo a {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    text-decoration: none; color: rgba(255,255,255,0.95);
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    transition: opacity 0.2s;
+  }
+  .top-promo a:hover { opacity: 0.85; }
+  .top-promo .promo-label { color: rgba(196,154,74,0.95); }
+  .top-promo .promo-arrow { opacity: 0.8; }
+
   /* HERO */
   .hero {
-    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 70px;
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 0;
   }
   .hero-left {
     display: flex; flex-direction: column; justify-content: center;
@@ -287,6 +304,9 @@
     .nav-links .nav-cta { margin-top: 12px; display: inline-block; text-align: center; }
     .nav-toggle { display: flex; }
 
+    .top-promo { margin-top: 64px; padding: 10px 18px; }
+    .top-promo a { font-size: 0.68rem; letter-spacing: 0.06em; }
+
     .hero { grid-template-columns: 1fr; min-height: auto; }
     .hero-left { padding: 56px 24px 48px; order: 2; }
     .hero-right { order: 1; min-height: 320px; }
@@ -329,12 +349,21 @@
     <li><a href="about.html">About</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="coverage.html">Coverage</a></li>
+    <li><a href="hack-your-hospital-birth.html">Hack Your Hospital Birth</a></li>
     <li><a href="contact.html" class="nav-cta">Get in Touch</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<div class="top-promo">
+  <a href="hack-your-hospital-birth.html">
+    <span class="promo-label">Now Booking</span>
+    <span>Hack Your Hospital Birth Workshop</span>
+    <span class="promo-arrow">→</span>
+  </a>
+</div>
 
 <!-- STICKY WHATSAPP -->
 <a href="https://wa.me/27728343888" class="sticky-wa" target="_blank" aria-label="Chat on WhatsApp">

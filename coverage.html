@@ -60,15 +60,28 @@
   .coverage-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; color: var(--forest); line-height: 1; }
   .coverage-stat-label { font-size: 0.78rem; color: var(--text-light); letter-spacing: 0.04em; margin-top: 4px; }
 
-  /* MAP placeholder */
-  .map-placeholder {
-    border-radius: 20px; overflow: hidden;
-    background: linear-gradient(160deg, rgba(45,74,62,0.06) 0%, rgba(45,74,62,0.02) 100%);
-    border: 1px solid var(--border); aspect-ratio: 1/1;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 12px; color: var(--text-light); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 24px;
+  /* COVERAGE MAP */
+  .coverage-map {
+    border-radius: 20px; overflow: hidden; border: 1px solid var(--border);
+    background: #fff; aspect-ratio: 1/1; display: grid;
   }
-  .map-placeholder svg { width: 40px; opacity: 0.3; }
+  .coverage-map iframe {
+    width: 100%; height: 100%; border: 0;
+  }
+  .coverage-map-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; padding: 12px 14px; border-top: 1px solid var(--border);
+    background: var(--warm-white);
+  }
+  .coverage-map-meta span {
+    font-size: 0.73rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-light);
+  }
+  .coverage-map-meta a {
+    font-size: 0.72rem; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--forest); font-weight: 500; text-decoration: none;
+  }
+  .coverage-map-meta a:hover { color: var(--terracotta); }
 
   /* AREA GRIDS */
   .areas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 24px; }
@@ -161,6 +174,7 @@
     <li><a href="about.html">About</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="coverage.html" class="active">Coverage</a></li>
+    <li><a href="hack-your-hospital-birth.html">Hack Your Hospital Birth</a></li>
     <li><a href="contact.html" class="nav-cta">Get in Touch</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -204,11 +218,18 @@
           </div>
         </div>
       </div>
-      <div class="map-placeholder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
-        </svg>
-        Map of Cape Town<br>coverage area
+      <div class="coverage-map">
+        <iframe
+          title="Cape Doula coverage map"
+          src="https://maps.google.com/maps?q=Cape%20Town%20hospitals%20and%20birthing%20centres&t=&z=10&ie=UTF8&iwloc=&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
+        <div class="coverage-map-meta">
+          <span>City Bowl · Northern Suburbs · South Peninsula</span>
+          <a href="https://www.google.com/maps/search/Cape+Town+hospitals+and+birthing+centres" target="_blank" rel="noopener noreferrer">Open full map</a>
+        </div>
       </div>
     </div>
 
