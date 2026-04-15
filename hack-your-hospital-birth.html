@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hack Your Hospital Birth – Cape Doula</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF6F1;
+    --warm-white: #FDF9F5;
+    --terracotta: #C4614A;
+    --forest: #2D4A3E;
+    --forest-mid: #3D6455;
+    --gold: #C49A4A;
+    --text-dark: #1E2A24;
+    --text-mid: #4A5550;
+    --text-light: #7A8A84;
+    --border: #E8DDD4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 48px;
+    background: rgba(250,246,241,0.95); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--forest); letter-spacing: 0.04em; text-decoration: none; }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+  .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--terracotta); }
+  .nav-cta { background: var(--forest); color: #fff !important; padding: 10px 22px; border-radius: 40px; font-size: 0.76rem !important; letter-spacing: 0.1em !important; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--forest-mid) !important; }
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--text-dark); border-radius: 2px; transition: all 0.3s; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 70px;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 56px 80px 72px; position: relative;
+  }
+  .hero-left::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 60%, rgba(196,97,74,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--terracotta); font-weight: 500; margin-bottom: 24px;
+  }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--terracotta); }
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 4.5vw, 5rem); font-weight: 300; line-height: 1.07; color: var(--text-dark); margin-bottom: 10px;
+  }
+  .hero-headline em { font-style: italic; color: var(--forest); }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+    font-weight: 300; font-style: italic; color: var(--text-mid); margin-bottom: 28px; line-height: 1.5;
+  }
+  .hero-body { font-size: 0.95rem; line-height: 1.78; color: var(--text-mid); max-width: 460px; margin-bottom: 36px; }
+
+  /* event pill */
+  .event-pill {
+    display: inline-flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    background: var(--forest); border-radius: 16px; padding: 18px 24px; margin-bottom: 32px;
+  }
+  .event-detail { display: flex; flex-direction: column; gap: 2px; }
+  .event-label { font-size: 0.63rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .event-value { font-size: 0.9rem; font-weight: 500; color: #fff; }
+  .event-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.15); flex-shrink: 0; }
+  .event-spots {
+    background: var(--terracotta); color: #fff; padding: 6px 14px;
+    border-radius: 40px; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; white-space: nowrap;
+  }
+
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--terracotta); color: #fff; padding: 14px 34px; border-radius: 40px;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; text-decoration: none;
+    display: inline-block; transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #b05540; transform: translateY(-1px); }
+  .btn-whatsapp {
+    display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: #fff;
+    padding: 14px 26px; border-radius: 40px; font-size: 0.85rem; font-weight: 500;
+    text-decoration: none; transition: background 0.2s, transform 0.15s;
+  }
+  .btn-whatsapp:hover { background: #20BA5A; transform: translateY(-1px); }
+  .btn-whatsapp svg { width: 17px; height: 17px; fill: #fff; flex-shrink: 0; }
+
+  /* hero right — photo collage */
+  .hero-right { position: relative; overflow: hidden; background: var(--forest); min-height: 520px; }
+  .collage {
+    display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+    height: 100%; gap: 3px;
+  }
+  .collage-img {
+    overflow: hidden; background: var(--forest-mid);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.25); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; text-align: center; padding: 12px;
+  }
+  .collage-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .collage-img.span-col { grid-column: span 2; }
+
+  /* ─── WHAT YOU'LL WALK AWAY WITH ─── */
+  .deliverables { padding: 96px 72px; }
+  .deliverables-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 5fr 7fr; gap: 80px; align-items: center; }
+  .del-text {}
+  .section-eyebrow { display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terracotta); font-weight: 500; margin-bottom: 14px; }
+  .del-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.15; color: var(--text-dark); margin-bottom: 20px; }
+  .del-title em { font-style: italic; color: var(--forest); }
+  .del-desc { font-size: 0.93rem; line-height: 1.8; color: var(--text-mid); }
+  .del-cards { display: grid; gap: 16px; }
+  .del-card {
+    background: #fff; border-radius: 16px; padding: 24px 28px;
+    border: 1px solid var(--border); display: flex; gap: 20px; align-items: flex-start;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .del-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(45,74,62,0.08); }
+  .del-num {
+    width: 40px; height: 40px; border-radius: 10px; background: var(--forest);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: rgba(255,255,255,0.9);
+  }
+  .del-content {}
+  .del-card-title { font-size: 0.9rem; font-weight: 500; color: var(--text-dark); margin-bottom: 5px; }
+  .del-card-desc { font-size: 0.83rem; line-height: 1.65; color: var(--text-mid); }
+
+  /* ─── WHAT'S COVERED ─── */
+  .covered { padding: 88px 72px; background: var(--warm-white); }
+  .covered-inner { max-width: 1100px; margin: 0 auto; }
+  .covered-header { text-align: center; max-width: 580px; margin: 0 auto 56px; }
+  .covered-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3vw, 3rem); font-weight: 300; line-height: 1.2; color: var(--text-dark); margin-bottom: 14px; }
+  .covered-title em { font-style: italic; color: var(--forest); }
+  .covered-desc { font-size: 0.93rem; line-height: 1.75; color: var(--text-mid); }
+  .topics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .topic-card { background: #fff; border-radius: 18px; padding: 28px; border: 1px solid var(--border); }
+  .topic-icon { font-size: 1.7rem; margin-bottom: 14px; }
+  .topic-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400; color: var(--text-dark); margin-bottom: 8px; }
+  .topic-desc { font-size: 0.84rem; line-height: 1.68; color: var(--text-mid); }
+
+  /* ─── REVIEW ─── */
+  .review-section { padding: 88px 72px; background: var(--forest); position: relative; overflow: hidden; }
+  .review-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(196,97,74,0.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .review-inner { max-width: 860px; margin: 0 auto; position: relative; text-align: center; }
+  .review-quote-mark {
+    font-family: 'Cormorant Garamond', serif; font-size: 8rem; font-weight: 300; line-height: 0.6;
+    color: rgba(255,255,255,0.08); display: block; margin-bottom: 24px;
+  }
+  .review-eyebrow { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(196,97,74,0.85); font-weight: 500; margin-bottom: 28px; }
+  .review-text {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2.5vw, 1.65rem); font-style: italic;
+    font-weight: 300; color: rgba(255,255,255,0.88); line-height: 1.65; margin-bottom: 36px;
+  }
+  .review-author { display: inline-flex; flex-direction: column; gap: 4px; align-items: center; }
+  .review-name { font-size: 0.88rem; font-weight: 500; color: rgba(255,255,255,0.9); letter-spacing: 0.04em; }
+  .review-detail { font-size: 0.76rem; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; text-transform: uppercase; }
+  .review-stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 3px; margin-bottom: 20px; }
+
+  /* ─── PRICING / BOOK ─── */
+  .book-section { padding: 96px 72px; }
+  .book-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+  .price-card {
+    background: #fff; border-radius: 24px; padding: 44px; border: 1px solid var(--border);
+    text-align: center;
+  }
+  .price-eyebrow { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-light); margin-bottom: 20px; }
+  .price-amount { font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 300; color: var(--text-dark); line-height: 1; margin-bottom: 4px; }
+  .price-note { font-size: 0.82rem; color: var(--text-light); margin-bottom: 28px; }
+  .price-includes { list-style: none; text-align: left; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  .price-includes li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.86rem; color: var(--text-mid); line-height: 1.4; }
+  .price-includes li::before { content: '✓'; color: var(--forest); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+  .price-cta { display: flex; flex-direction: column; gap: 12px; }
+  .btn-full {
+    display: block; width: 100%; text-align: center; padding: 14px; border-radius: 40px;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; text-decoration: none; transition: all 0.2s;
+  }
+  .btn-full.primary { background: var(--terracotta); color: #fff; }
+  .btn-full.primary:hover { background: #b05540; }
+  .btn-full.wa { background: #25D366; color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn-full.wa:hover { background: #20BA5A; }
+  .btn-full.wa svg { width: 16px; height: 16px; fill: #fff; }
+
+  .private-card {
+    background: var(--forest); border-radius: 24px; padding: 44px;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .private-label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(196,97,74,0.85); font-weight: 500; }
+  .private-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 300; color: #fff; line-height: 1.25; }
+  .private-desc { font-size: 0.88rem; line-height: 1.75; color: rgba(255,255,255,0.65); }
+  .private-features { display: flex; flex-direction: column; gap: 10px; }
+  .private-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 0.84rem; color: rgba(255,255,255,0.75); line-height: 1.4; }
+  .private-feature::before { content: '✓'; color: var(--gold); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+  .private-cta { margin-top: auto; }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px; justify-content: center; width: 100%;
+    border: 1.5px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.85);
+    padding: 13px; border-radius: 40px; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+  .btn-ghost svg { width: 15px; height: 15px; fill: rgba(255,255,255,0.7); }
+
+  /* ─── STICKY WHATSAPP ─── */
+  .sticky-wa { position: fixed; bottom: 28px; right: 28px; z-index: 200; background: #25D366; width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.45); text-decoration: none; transition: transform 0.2s; }
+  .sticky-wa:hover { transform: scale(1.1); }
+  .sticky-wa svg { width: 26px; height: 26px; fill: #fff; }
+
+  /* ─── FOOTER ─── */
+  footer { background: var(--text-dark); padding: 60px 72px 36px; color: rgba(255,255,255,0.6); }
+  .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 300; color: #fff; margin-bottom: 10px; }
+  .footer-tagline { font-size: 0.84rem; line-height: 1.7; color: rgba(255,255,255,0.45); margin-bottom: 24px; max-width: 280px; }
+  .footer-social { display: flex; gap: 10px; }
+  .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: background 0.2s; }
+  .footer-social a:hover { background: var(--terracotta); }
+  .footer-social svg { width: 16px; height: 16px; fill: rgba(255,255,255,0.7); }
+  .footer-col-title { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 18px; font-weight: 500; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.86rem; transition: color 0.2s; }
+  .footer-links a:hover { color: #fff; }
+  .footer-contact-item { display: flex; gap: 10px; font-size: 0.84rem; margin-bottom: 10px; align-items: flex-start; }
+  .footer-contact-icon { opacity: 0.4; flex-shrink: 0; margin-top: 2px; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 0.76rem; }
+  .footer-cert-line { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.35); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .topics-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 24px; }
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(250,246,241,0.98); backdrop-filter: blur(12px); padding: 20px 24px 28px; gap: 0; border-bottom: 1px solid var(--border); }
+    .nav-links.open { display: flex; }
+    .nav-links li { border-bottom: 1px solid var(--border); }
+    .nav-links a { display: block; padding: 13px 0; }
+    .nav-links .nav-cta { margin-top: 12px; display: inline-block; text-align: center; }
+    .nav-toggle { display: flex; }
+
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 56px 24px 48px; order: 2; }
+    .hero-right { order: 1; min-height: 280px; }
+    .collage { grid-template-columns: 1fr 1fr; }
+    .collage-img.span-col { grid-column: span 2; }
+
+    .event-pill { gap: 14px; }
+    .event-divider { display: none; }
+    .hero-actions { flex-direction: column; }
+    .hero-actions a { text-align: center; justify-content: center; }
+
+    .deliverables { padding: 60px 24px; }
+    .deliverables-inner { grid-template-columns: 1fr; gap: 44px; }
+
+    .covered { padding: 60px 24px; }
+    .topics-grid { grid-template-columns: 1fr; }
+
+    .review-section { padding: 60px 24px; }
+
+    .book-section { padding: 60px 24px; }
+    .book-inner { grid-template-columns: 1fr; }
+
+    footer { padding: 48px 24px 28px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 36px; }
+    .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+    .footer-cert-line { flex-direction: column; gap: 4px; }
+
+    .sticky-wa { bottom: 20px; right: 20px; width: 52px; height: 52px; }
+  }
+
+  @media (max-width: 480px) {
+    .collage { grid-template-columns: 1fr; }
+    .collage-img.span-col { grid-column: span 1; }
+    .collage-img:nth-child(n+3) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Cape Doula</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="coverage.html">Coverage</a></li>
+    <li><a href="contact.html" class="nav-cta">Get in Touch</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- STICKY WHATSAPP -->
+<a href="https://wa.me/27728343888" class="sticky-wa" target="_blank" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-eyebrow">Cape Doula · Signature Workshop</span>
+    <h1 class="hero-headline">Hack Your<br><em>Hospital Birth</em></h1>
+    <p class="hero-sub">Honest, raw and empowering — for couples ready to take charge of their birth.</p>
+    <p class="hero-body">Cape Doula's signature 3-hour workshop is aimed at empowering and preparing couples for childbirth in the hospital. We explore the hospital environment with honest, raw information to ensure you have a plan for various scenarios.</p>
+
+    <div class="event-pill">
+      <div class="event-detail">
+        <span class="event-label">Date</span>
+        <span class="event-value">25 April 2026</span>
+      </div>
+      <div class="event-divider"></div>
+      <div class="event-detail">
+        <span class="event-label">Time</span>
+        <span class="event-value">9:00 AM – 12:00 PM</span>
+      </div>
+      <div class="event-divider"></div>
+      <div class="event-detail">
+        <span class="event-label">Location</span>
+        <span class="event-value">Pinelands, Cape Town</span>
+      </div>
+      <div class="event-spots">Limited spots</div>
+    </div>
+
+    <div class="hero-actions">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzlDFHuBSytNDRx4TJ81vjKWCC0gsTdiG6VPECLrKueeWkKg/viewform" class="btn-primary" target="_blank">Sign Up Now</a>
+      <a href="https://wa.me/27728343888?text=Hi%20Fahmieda%2C%20I%27d%20like%20to%20book%20the%20Hack%20Your%20Hospital%20Birth%20class%20on%2025%20April." class="btn-whatsapp" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Book via WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- PHOTO COLLAGE -->
+  <div class="hero-right">
+    <div class="collage">
+      <div class="collage-img">
+        <img src="https://www.capedoula.co.za/sitepad-data/uploads/2026/03/20231125_094042-1024x768.jpg" alt="Hack Your Hospital Birth workshop" loading="lazy">
+      </div>
+      <div class="collage-img">
+        <img src="https://www.capedoula.co.za/sitepad-data/uploads/2024/08/tecahing-at-HP.jpg" alt="Antenatal talk at Hanover Park" loading="lazy">
+      </div>
+      <div class="collage-img">
+        <img src="https://www.capedoula.co.za/sitepad-data/uploads/2024/08/me-at-Gatesville-Melomed.jpg" alt="Antenatal class at Melomed" loading="lazy">
+      </div>
+      <div class="collage-img">
+        <img src="https://www.capedoula.co.za/sitepad-data/uploads/2023/08/Me-Giving-Talks-1024x744.jpg" alt="Fahmieda giving a birth education talk" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="deliverables" id="deliverables">
+  <div class="deliverables-inner">
+    <div class="del-text">
+      <span class="section-eyebrow">Key Deliverables</span>
+      <h2 class="del-title">What you'll walk<br>away <em>with</em></h2>
+      <p class="del-desc">This isn't a standard antenatal class. It's an honest, practical deep-dive into the hospital birth experience — so you walk in prepared, not anxious.</p>
+    </div>
+    <div class="del-cards">
+      <div class="del-card">
+        <div class="del-num">1</div>
+        <div class="del-content">
+          <div class="del-card-title">Your birth plan</div>
+          <p class="del-card-desc">A clear, practical birth plan — used as a communication tool between you and your medical team, not a rigid script.</p>
+        </div>
+      </div>
+      <div class="del-card">
+        <div class="del-num">2</div>
+        <div class="del-content">
+          <div class="del-card-title">Know your rights</div>
+          <p class="del-card-desc">Informed and confident about your rights and responsibilities in the hospital environment — no more nodding along when you're unsure.</p>
+        </div>
+      </div>
+      <div class="del-card">
+        <div class="del-num">3</div>
+        <div class="del-content">
+          <div class="del-card-title">A partner who shows up</div>
+          <p class="del-card-desc">Your partner leaves knowing exactly what is expected of them when it matters most — with practical tools and the confidence to use them.</p>
+        </div>
+      </div>
+      <div class="del-card">
+        <div class="del-num">4</div>
+        <div class="del-content">
+          <div class="del-card-title">A toolkit for minimal intervention</div>
+          <p class="del-card-desc">Physical and emotional techniques to help manage labour — especially if you want to minimise medical intervention.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S COVERED -->
+<section class="covered" id="topics">
+  <div class="covered-inner">
+    <div class="covered-header">
+      <span class="section-eyebrow">Inside the Workshop</span>
+      <h2 class="covered-title">Three hours of<br><em>real information</em></h2>
+      <p class="covered-desc">We cover what hospital birth really looks like — honestly and without fluff — so you're not surprised when it matters.</p>
+    </div>
+    <div class="topics-grid">
+      <div class="topic-card">
+        <div class="topic-icon">🏥</div>
+        <h3 class="topic-title">The Hospital Environment</h3>
+        <p class="topic-desc">What to expect when you arrive, who you'll encounter, how triage works, and how to navigate the system calmly from the moment you walk through the door.</p>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">📋</div>
+        <h3 class="topic-title">Birth Plan as a Tool</h3>
+        <p class="topic-desc">How to write a birth plan that actually works — as a communication aid with your care team, not a wishlist that gets ignored.</p>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">⚖️</div>
+        <h3 class="topic-title">Your Rights in the System</h3>
+        <p class="topic-desc">Informed consent, your right to ask questions, delayed cord clamping, skin-to-skin, and how to advocate for yourself in a busy hospital ward.</p>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">💪</div>
+        <h3 class="topic-title">Pain Management Options</h3>
+        <p class="topic-desc">An honest overview of both medical and non-medical pain management — epidural, gas and air, TENS, movement, water, breathing — and when to use what.</p>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">👫</div>
+        <h3 class="topic-title">The Partner's Role</h3>
+        <p class="topic-desc">Practical coaching for partners — how to read the room, what to say (and not say), how to advocate, and how to stay calm and useful throughout.</p>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">🔄</div>
+        <h3 class="topic-title">When Plans Change</h3>
+        <p class="topic-desc">What happens if labour is induced, if a caesarean becomes necessary, or if things don't go to plan — and how to stay grounded when they don't.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEW -->
+<section class="review-section">
+  <div class="review-inner">
+    <div class="review-stars">★★★★★</div>
+    <span class="review-eyebrow">Client Review</span>
+    <p class="review-text">"My husband and I had the privilege of doing a private childbirth readiness class with Fahmieda in the comfort of our home, and it was such a wonderful experience. We learned so much, and the way she explained everything was clear, calm, and reassuring. She gave my husband so much confidence in his role as my birthing partner and taught him practical ways to support me during labour and in the postpartum period. We both walked away feeling empowered, prepared, and truly grateful for her guidance."</p>
+    <div class="review-author">
+      <span class="review-name">Nabeelah Bardien</span>
+      <span class="review-detail">First-time mom · Private session</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING / BOOK -->
+<section class="book-section" id="book">
+  <div class="book-inner">
+
+    <!-- GROUP CLASS -->
+    <div class="price-card">
+      <div class="price-eyebrow">Group Workshop · 25 April 2026</div>
+      <div class="price-amount">R650</div>
+      <div class="price-note">per couple · snacks included</div>
+      <ul class="price-includes">
+        <li>3-hour workshop in Pinelands</li>
+        <li>Snacks included</li>
+        <li>Birth plan template</li>
+        <li>Partner coaching session</li>
+        <li>Small group — limited couples</li>
+        <li>9:00 AM – 12:00 PM</li>
+      </ul>
+      <div class="price-cta">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzlDFHuBSytNDRx4TJ81vjKWCC0gsTdiG6VPECLrKueeWkKg/viewform" class="btn-full primary" target="_blank">Sign Up via Google Form</a>
+        <a href="https://wa.me/27728343888?text=Hi%20Fahmieda%2C%20I%27d%20like%20to%20book%20the%20Hack%20Your%20Hospital%20Birth%20class%20on%2025%20April%20in%20Pinelands." class="btn-full wa" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Book via WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- PRIVATE SESSION -->
+    <div class="private-card">
+      <div class="private-label">Alternative option</div>
+      <div class="private-title">Private session<br>in your home</div>
+      <p class="private-desc">Prefer a more personal experience? I offer private childbirth readiness sessions in the comfort of your own home — or virtually — at a time that suits you.</p>
+      <div class="private-features">
+        <div class="private-feature">Completely tailored to your situation</div>
+        <div class="private-feature">Your home or virtually</div>
+        <div class="private-feature">Date and time that works for you</div>
+        <div class="private-feature">Same core content, just for you two</div>
+        <div class="private-feature">Also available as a virtual session</div>
+      </div>
+      <div class="private-cta">
+        <a href="https://wa.me/27728343888?text=Hi%20Fahmieda%2C%20I%27m%20interested%20in%20a%20private%20childbirth%20readiness%20session." class="btn-ghost" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Ask about private sessions
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Cape Doula</div>
+      <p class="footer-tagline">Certified birth & postpartum doula serving Cape Town families. Mothering the mother, free of bias, expectations and cultural norms.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/capedoula/" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@capedoulafahmieda" target="_blank" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.52V6.75a4.85 4.85 0 01-1.02-.06z"/></svg>
+        </a>
+        <a href="mailto:info@capedoula.co.za" aria-label="Email">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Pages</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About Fahmieda</a></li>
+        <li><a href="services.html">Services & Pricing</a></li>
+        <li><a href="coverage.html">Hospital Coverage</a></li>
+        <li><a href="hack-your-hospital-birth.html">Hack Your Hospital Birth</a></li>
+        <li><a href="contact.html">Get in Touch</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item"><span class="footer-contact-icon">💬</span><span><a href="https://wa.me/27728343888" style="color:rgba(255,255,255,0.55);text-decoration:none;" target="_blank">072 834 3888 (WhatsApp)</a></span></div>
+      <div class="footer-contact-item"><span class="footer-contact-icon">✉️</span><span><a href="mailto:info@capedoula.co.za" style="color:rgba(255,255,255,0.55);text-decoration:none;">info@capedoula.co.za</a></span></div>
+      <div class="footer-contact-item"><span class="footer-contact-icon">📍</span><span>Cape Town, Western Cape</span></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Cape Doula · All rights reserved</span>
+    <div class="footer-cert-line"><span>W.O.M.B.S Certified</span><span style="opacity:0.3">·</span><span>Fedhealth Preferred Provider</span></div>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    links.classList.toggle('open');
+  });
+</script>
+</body>
+</html>
