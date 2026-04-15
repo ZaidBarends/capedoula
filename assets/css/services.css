@@ -1,0 +1,95 @@
+/* PAGE BANNER */
+  .page-banner { padding: 150px 72px 80px; background: var(--forest); position: relative; overflow: hidden; }
+  .page-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 30%, rgba(196,97,74,0.2) 0%, transparent 60%); pointer-events: none; }
+  .page-banner-inner { position: relative; max-width: 680px; }
+  .page-banner-eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(196,97,74,0.9); font-weight: 500; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 10px; }
+  .page-banner-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--terracotta); }
+  .page-banner h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem, 5vw, 4.2rem); font-weight: 300; line-height: 1.1; color: #fff; margin-bottom: 18px; }
+  .page-banner h1 em { font-style: italic; color: rgba(255,255,255,0.65); }
+  .page-banner p { font-size: 1rem; line-height: 1.75; color: rgba(255,255,255,0.62); max-width: 540px; }
+
+  /* PHASE SECTIONS */
+  .phase { padding: 88px 72px; }
+  .phase-alt { background: var(--warm-white); }
+  .phase-inner { max-width: 1100px; margin: 0 auto; }
+  .phase-header { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin-bottom: 60px; }
+  .phase-header.flip { direction: rtl; }
+  .phase-header.flip > * { direction: ltr; }
+  .phase-label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; margin-bottom: 10px; }
+  .phase-label.pregnancy { color: var(--terracotta); }
+  .phase-label.birth { color: var(--forest-mid); }
+  .phase-label.postpartum { color: var(--gold); }
+  .phase-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.5vw, 3.2rem); font-weight: 300; line-height: 1.1; color: var(--text-dark); margin-bottom: 20px; }
+  .phase-title em { font-style: italic; }
+  .phase-title.pregnancy em { color: var(--terracotta); }
+  .phase-title.birth em { color: var(--forest); }
+  .phase-title.postpartum em { color: var(--gold); }
+  .phase-desc { font-size: 0.93rem; line-height: 1.8; color: var(--text-mid); }
+  .phase-img {
+    border-radius: 20px; overflow: hidden;
+    background: linear-gradient(160deg, #2D4A3E 0%, #4A7A68 100%);
+    aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.35); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; text-align: center; padding: 20px;
+  }
+  .phase-img.t { background: linear-gradient(160deg, #C4614A22 0%, #FAF6F1 100%); border: 1px solid var(--border); color: var(--text-light); }
+  .phase-img.g { background: linear-gradient(160deg, #C49A4A22 0%, #FAF6F1 100%); border: 1px solid var(--border); color: var(--text-light); }
+
+  /* PACKAGES */
+  .packages { display: grid; gap: 20px; }
+  .package-card { background: #fff; border-radius: 20px; border: 1px solid var(--border); overflow: hidden; }
+  .package-top { display: flex; align-items: center; justify-content: space-between; padding: 28px 32px; gap: 20px; flex-wrap: wrap; }
+  .package-name { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 400; color: var(--text-dark); margin-bottom: 4px; }
+  .package-tagline { font-size: 0.83rem; color: var(--text-light); }
+  .package-price-wrap { text-align: right; flex-shrink: 0; }
+  .package-price { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--text-dark); }
+  .package-price-note { font-size: 0.73rem; color: var(--text-light); }
+  .package-divider { height: 1px; background: var(--border); margin: 0 32px; }
+  .package-features { padding: 24px 32px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 32px; }
+  .package-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: var(--text-mid); line-height: 1.45; }
+  .package-feature::before { content: '✓'; color: var(--forest); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+  .package-card.featured { border-color: var(--forest); box-shadow: 0 8px 32px rgba(45,74,62,0.1); }
+  .featured-tag { background: var(--forest); color: #fff; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 40px; display: inline-block; margin-bottom: 12px; }
+
+  /* UPCOMING CLASSES */
+  .class-section { padding: 88px 72px; }
+  .class-inner { max-width: 1100px; margin: 0 auto; }
+  .class-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+  .class-card { background: #fff; border-radius: 20px; padding: 32px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
+  .class-date { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 300; color: var(--terracotta); line-height: 1; }
+  .class-name { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 400; color: var(--text-dark); }
+  .class-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .class-meta-item { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--text-mid); }
+  .class-meta-item svg { width: 14px; opacity: 0.5; }
+  .class-price-tag { background: rgba(45,74,62,0.07); color: var(--forest); padding: 6px 14px; border-radius: 40px; font-size: 0.78rem; font-weight: 500; align-self: flex-start; margin-top: 4px; }
+  .class-cta { margin-top: auto; }
+  .btn-wa { display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: #fff; padding: 12px 24px; border-radius: 40px; font-size: 0.82rem; font-weight: 500; text-decoration: none; transition: background 0.2s; }
+  .btn-wa:hover { background: #20BA5A; }
+  .btn-wa svg { width: 15px; height: 15px; fill: #fff; }
+
+  /* FAQ */
+  .faq-section { padding: 88px 72px; background: var(--warm-white); }
+  .faq-inner { max-width: 800px; margin: 0 auto; }
+  .faq-header { text-align: center; margin-bottom: 52px; }
+  .section-eyebrow { display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terracotta); font-weight: 500; margin-bottom: 14px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.9rem, 3vw, 2.9rem); font-weight: 300; line-height: 1.2; color: var(--text-dark); }
+  .section-title em { font-style: italic; color: var(--forest); }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-q { font-family: 'Cormorant Garamond', serif; font-size: 1.12rem; font-weight: 400; color: var(--text-dark); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; user-select: none; }
+  .faq-q::after { content: '+'; font-size: 1.3rem; font-weight: 300; color: var(--terracotta); flex-shrink: 0; transition: transform 0.25s; }
+  .faq-item.open .faq-q::after { content: '−'; }
+  .faq-a { font-size: 0.9rem; line-height: 1.78; color: var(--text-mid); max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding-bottom 0.3s; }
+  .faq-item.open .faq-a { max-height: 300px; padding-bottom: 22px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .page-banner { padding: 120px 24px 60px; }
+    .phase { padding: 60px 24px; }
+    .phase-header { grid-template-columns: 1fr; gap: 32px; }
+    .phase-header.flip { direction: ltr; }
+    .package-features { grid-template-columns: 1fr; }
+    .package-top { flex-direction: column; align-items: flex-start; }
+    .package-price-wrap { text-align: left; }
+    .class-section { padding: 60px 24px; }
+    .class-grid { grid-template-columns: 1fr; }
+    .faq-section { padding: 60px 24px; }
+  }

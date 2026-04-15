@@ -5,168 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Services & Pricing – Cape Doula</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --cream: #FAF6F1;
-    --warm-white: #FDF9F5;
-    --terracotta: #C4614A;
-    --forest: #2D4A3E;
-    --forest-mid: #3D6455;
-    --gold: #C49A4A;
-    --text-dark: #1E2A24;
-    --text-mid: #4A5550;
-    --text-light: #7A8A84;
-    --border: #E8DDD4;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
-
-  /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; background: rgba(250,246,241,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--forest); letter-spacing: 0.04em; text-decoration: none; }
-  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
-  .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-mid); text-decoration: none; transition: color 0.2s; }
-  .nav-links a:hover, .nav-links a.active { color: var(--terracotta); }
-  .nav-cta { background: var(--forest); color: #fff !important; padding: 10px 22px; border-radius: 40px; font-size: 0.76rem !important; letter-spacing: 0.1em !important; transition: background 0.2s !important; }
-  .nav-cta:hover { background: var(--forest-mid) !important; }
-  .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
-  .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--text-dark); border-radius: 2px; transition: all 0.3s; }
-  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .nav-toggle.open span:nth-child(2) { opacity: 0; }
-  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  /* PAGE BANNER */
-  .page-banner { padding: 150px 72px 80px; background: var(--forest); position: relative; overflow: hidden; }
-  .page-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 30%, rgba(196,97,74,0.2) 0%, transparent 60%); pointer-events: none; }
-  .page-banner-inner { position: relative; max-width: 680px; }
-  .page-banner-eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(196,97,74,0.9); font-weight: 500; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 10px; }
-  .page-banner-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--terracotta); }
-  .page-banner h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem, 5vw, 4.2rem); font-weight: 300; line-height: 1.1; color: #fff; margin-bottom: 18px; }
-  .page-banner h1 em { font-style: italic; color: rgba(255,255,255,0.65); }
-  .page-banner p { font-size: 1rem; line-height: 1.75; color: rgba(255,255,255,0.62); max-width: 540px; }
-
-  /* PHASE SECTIONS */
-  .phase { padding: 88px 72px; }
-  .phase-alt { background: var(--warm-white); }
-  .phase-inner { max-width: 1100px; margin: 0 auto; }
-  .phase-header { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin-bottom: 60px; }
-  .phase-header.flip { direction: rtl; }
-  .phase-header.flip > * { direction: ltr; }
-  .phase-label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; margin-bottom: 10px; }
-  .phase-label.pregnancy { color: var(--terracotta); }
-  .phase-label.birth { color: var(--forest-mid); }
-  .phase-label.postpartum { color: var(--gold); }
-  .phase-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.5vw, 3.2rem); font-weight: 300; line-height: 1.1; color: var(--text-dark); margin-bottom: 20px; }
-  .phase-title em { font-style: italic; }
-  .phase-title.pregnancy em { color: var(--terracotta); }
-  .phase-title.birth em { color: var(--forest); }
-  .phase-title.postpartum em { color: var(--gold); }
-  .phase-desc { font-size: 0.93rem; line-height: 1.8; color: var(--text-mid); }
-  .phase-img {
-    border-radius: 20px; overflow: hidden;
-    background: linear-gradient(160deg, #2D4A3E 0%, #4A7A68 100%);
-    aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
-    color: rgba(255,255,255,0.35); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; text-align: center; padding: 20px;
-  }
-  .phase-img.t { background: linear-gradient(160deg, #C4614A22 0%, #FAF6F1 100%); border: 1px solid var(--border); color: var(--text-light); }
-  .phase-img.g { background: linear-gradient(160deg, #C49A4A22 0%, #FAF6F1 100%); border: 1px solid var(--border); color: var(--text-light); }
-
-  /* PACKAGES */
-  .packages { display: grid; gap: 20px; }
-  .package-card { background: #fff; border-radius: 20px; border: 1px solid var(--border); overflow: hidden; }
-  .package-top { display: flex; align-items: center; justify-content: space-between; padding: 28px 32px; gap: 20px; flex-wrap: wrap; }
-  .package-name { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 400; color: var(--text-dark); margin-bottom: 4px; }
-  .package-tagline { font-size: 0.83rem; color: var(--text-light); }
-  .package-price-wrap { text-align: right; flex-shrink: 0; }
-  .package-price { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--text-dark); }
-  .package-price-note { font-size: 0.73rem; color: var(--text-light); }
-  .package-divider { height: 1px; background: var(--border); margin: 0 32px; }
-  .package-features { padding: 24px 32px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 32px; }
-  .package-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: var(--text-mid); line-height: 1.45; }
-  .package-feature::before { content: '✓'; color: var(--forest); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
-  .package-card.featured { border-color: var(--forest); box-shadow: 0 8px 32px rgba(45,74,62,0.1); }
-  .featured-tag { background: var(--forest); color: #fff; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 40px; display: inline-block; margin-bottom: 12px; }
-
-  /* UPCOMING CLASSES */
-  .class-section { padding: 88px 72px; }
-  .class-inner { max-width: 1100px; margin: 0 auto; }
-  .class-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
-  .class-card { background: #fff; border-radius: 20px; padding: 32px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
-  .class-date { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 300; color: var(--terracotta); line-height: 1; }
-  .class-name { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 400; color: var(--text-dark); }
-  .class-meta { display: flex; gap: 16px; flex-wrap: wrap; }
-  .class-meta-item { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--text-mid); }
-  .class-meta-item svg { width: 14px; opacity: 0.5; }
-  .class-price-tag { background: rgba(45,74,62,0.07); color: var(--forest); padding: 6px 14px; border-radius: 40px; font-size: 0.78rem; font-weight: 500; align-self: flex-start; margin-top: 4px; }
-  .class-cta { margin-top: auto; }
-  .btn-wa { display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: #fff; padding: 12px 24px; border-radius: 40px; font-size: 0.82rem; font-weight: 500; text-decoration: none; transition: background 0.2s; }
-  .btn-wa:hover { background: #20BA5A; }
-  .btn-wa svg { width: 15px; height: 15px; fill: #fff; }
-
-  /* FAQ */
-  .faq-section { padding: 88px 72px; background: var(--warm-white); }
-  .faq-inner { max-width: 800px; margin: 0 auto; }
-  .faq-header { text-align: center; margin-bottom: 52px; }
-  .section-eyebrow { display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terracotta); font-weight: 500; margin-bottom: 14px; }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.9rem, 3vw, 2.9rem); font-weight: 300; line-height: 1.2; color: var(--text-dark); }
-  .section-title em { font-style: italic; color: var(--forest); }
-  .faq-item { border-bottom: 1px solid var(--border); }
-  .faq-q { font-family: 'Cormorant Garamond', serif; font-size: 1.12rem; font-weight: 400; color: var(--text-dark); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; user-select: none; }
-  .faq-q::after { content: '+'; font-size: 1.3rem; font-weight: 300; color: var(--terracotta); flex-shrink: 0; transition: transform 0.25s; }
-  .faq-item.open .faq-q::after { content: '−'; }
-  .faq-a { font-size: 0.9rem; line-height: 1.78; color: var(--text-mid); max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding-bottom 0.3s; }
-  .faq-item.open .faq-a { max-height: 300px; padding-bottom: 22px; }
-
-  /* STICKY WHATSAPP */
-  .sticky-wa { position: fixed; bottom: 28px; right: 28px; z-index: 200; background: #25D366; width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.45); text-decoration: none; transition: transform 0.2s; }
-  .sticky-wa:hover { transform: scale(1.1); }
-  .sticky-wa svg { width: 26px; height: 26px; fill: #fff; }
-
-  /* FOOTER */
-  footer { background: var(--text-dark); padding: 60px 72px 36px; color: rgba(255,255,255,0.6); }
-  .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
-  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 300; color: #fff; margin-bottom: 10px; }
-  .footer-tagline { font-size: 0.84rem; line-height: 1.7; color: rgba(255,255,255,0.45); margin-bottom: 24px; max-width: 280px; }
-  .footer-social { display: flex; gap: 10px; }
-  .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: background 0.2s; }
-  .footer-social a:hover { background: var(--terracotta); }
-  .footer-social svg { width: 16px; height: 16px; fill: rgba(255,255,255,0.7); }
-  .footer-col-title { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 18px; font-weight: 500; }
-  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .footer-links a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.86rem; transition: color 0.2s; }
-  .footer-links a:hover { color: #fff; }
-  .footer-contact-item { display: flex; gap: 10px; font-size: 0.84rem; margin-bottom: 10px; align-items: flex-start; }
-  .footer-contact-icon { opacity: 0.4; flex-shrink: 0; margin-top: 2px; }
-  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 0.76rem; }
-  .footer-cert-line { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.35); }
-
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    nav { padding: 14px 24px; }
-    .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(250,246,241,0.98); backdrop-filter: blur(12px); padding: 20px 24px 28px; gap: 0; border-bottom: 1px solid var(--border); }
-    .nav-links.open { display: flex; }
-    .nav-links li { border-bottom: 1px solid var(--border); }
-    .nav-links a { display: block; padding: 13px 0; }
-    .nav-links .nav-cta { margin-top: 12px; display: inline-block; text-align: center; }
-    .nav-toggle { display: flex; }
-    .page-banner { padding: 120px 24px 60px; }
-    .phase { padding: 60px 24px; }
-    .phase-header { grid-template-columns: 1fr; gap: 32px; }
-    .phase-header.flip { direction: ltr; }
-    .package-features { grid-template-columns: 1fr; }
-    .package-top { flex-direction: column; align-items: flex-start; }
-    .package-price-wrap { text-align: left; }
-    .class-section { padding: 60px 24px; }
-    .class-grid { grid-template-columns: 1fr; }
-    .faq-section { padding: 60px 24px; }
-    footer { padding: 48px 24px 28px; }
-    .footer-inner { grid-template-columns: 1fr; gap: 36px; }
-    .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
-    .footer-cert-line { flex-direction: column; gap: 4px; }
-    .sticky-wa { bottom: 20px; right: 20px; width: 52px; height: 52px; }
-  }
-</style>
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/services.css">
 </head>
 <body>
 
@@ -442,9 +282,6 @@
 </footer>
 
 <script>
-  const toggle = document.getElementById('navToggle');
-  const links = document.getElementById('navLinks');
-  toggle.addEventListener('click', () => { toggle.classList.toggle('open'); links.classList.toggle('open'); });
   document.querySelectorAll('.faq-q').forEach(q => {
     q.addEventListener('click', () => {
       const item = q.parentElement;
@@ -454,5 +291,7 @@
     });
   });
 </script>
+<script src="assets/js/site.js"></script>
 </body>
 </html>
+
