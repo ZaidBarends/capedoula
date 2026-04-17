@@ -31,6 +31,7 @@
     aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
     color: rgba(255,255,255,0.35); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; text-align: center; padding: 20px;
   }
+  .phase-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .phase-img.t { background: linear-gradient(160deg, #C4614A22 0%, #FAF6F1 100%); border: 1px solid var(--border); color: var(--text-light); }
   .phase-img.g { background: linear-gradient(160deg, #C49A4A22 0%, #FAF6F1 100%); border: 1px solid var(--border); color: var(--text-light); }
 
